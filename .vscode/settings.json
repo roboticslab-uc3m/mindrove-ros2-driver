@@ -1,0 +1,12 @@
+{
+    "python.analysis.extraPaths": [
+        "/home/sofia/dev_ws/build/py_pubsub",
+        "/home/sofia/dev_ws/install/py_pubsub/lib/python3.8/site-packages",
+        "/opt/ros/foxy/lib/python3.8/site-packages"
+    ],
+    "python.autoComplete.extraPaths": [
+        "/home/sofia/dev_ws/build/py_pubsub",
+        "/home/sofia/dev_ws/install/py_pubsub/lib/python3.8/site-packages",
+        "/opt/ros/foxy/lib/python3.8/site-packages"
+    ]
+}
