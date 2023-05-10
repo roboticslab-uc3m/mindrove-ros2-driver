@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'emg_publisher = mindrove_ros2_driver.emg_publisher:main'
         ],
     },
 )

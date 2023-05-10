@@ -1,6 +1,4 @@
-import argparse
 import time
-import numpy as np
 
 import mindrove
 from mindrove.board_shim import BoardShim, MindRoveInputParams, BoardIds
@@ -11,7 +9,7 @@ def main():
     BoardShim.enable_dev_board_logger()
 
     params = MindRoveInputParams()
-    params.ip_port = 4000
+    params.ip_port = 0
     params.serial_port = ''
     params.mac_address = ''
     params.serial_number = ''
