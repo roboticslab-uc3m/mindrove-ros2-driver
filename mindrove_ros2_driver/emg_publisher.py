@@ -43,55 +43,13 @@ class EmgPublisher(Node):
         self.publisher_ = self.create_publisher(MindroveEmg, 'mindrove/emg', 10)
 
         self.emg_channels = BoardShim.get_emg_channels(BoardIds.MINDROVE_WIFI_BOARD)
-        #self.board.get_board_data() 
-        #self.emg_channels = self.board.get_board_data()
-        #self.emg_channels = self.emg_channels[:8,:]
+
         self.timer = self.create_timer(0.01, self.timer_callback)
 
         self.max = np.ones(len(self.emg_channels)) * -np.inf
         self.min = np.ones(len(self.emg_channels)) * np.inf
         
-        #plot
-        #self.app = QtWidgets.QApplication(sys.argv)
-        #self.app = QtWidgets.QApplication(sys.argv)
-        #self.board_id = BoardShim.get_board_id()
-        #self.sampling_rate = BoardShim.get_sampling_rate(self.board_id)
-        #self.update_speed_ms = 50
-        #self.window_size = 4
-        #self.num_points = self.window_size * self.sampling_rate
-        #self.win = pg.GraphicsLayoutWidget(title='Mindrove Plot',size=(800, 600))
-        #self.win.show()
-        #self._init_timeseries()
-        #timer = QtCore.QTimer()
-        #timer.timeout.connect(self.update)
-        #timer.start(self.update_speed_ms)
-        #self.app.instance().exec_()
-
-    #plot
-    #def _init_timeseries(self):
-        #self.plots = list()
-        #self.curves = list()
-       # for i in range(len(self.emg_channels)):
-           # p = self.win.addPlot(row=i,col=0)
-           # p.showAxis('left', False)
-           # p.setMenuEnabled('left', False)
-           # p.showAxis('bottom', False)
-           # p.setMenuEnabled('bottom', False)
-            #if i == 0:
-            #    p.setTitle('Real-time TimeSeries Plot')
-            #self.plots.append(p)
-           # curve = p.plot()
-           # self.curves.append(curve)
-     #plot       
-   # def update(self):
-    
-      #  data = BoardShim.get_current_board_data(self.num_points)
-       # board_id = BoardIds.SYNTHETIC_BOARD.value
-       # for count, channel in enumerate(self.emg_channels):
-        #    DataFilter.remove_environmental_noise(data[channel], BoardShim.get_sampling_rate(board_id), NoiseTypes.FIFTY.value)
-        #    self.curves[count].setData(data[channel].tolist())
-
-        #self.app.processEvents()
+  
 
 
     def timer_callback(self):
@@ -118,9 +76,6 @@ def main(args=None):
 
     emg_publisher = EmgPublisher()
 
-    #plot
-    #BoardShim.enable_dev_board_logger()
-    #logging.basicConfig(level=logging.DEBUG)
 
     rclpy.spin(emg_publisher)
     
