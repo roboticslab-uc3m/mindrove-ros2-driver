@@ -22,6 +22,7 @@ class EmgPublisher(Node):
         super().__init__('emg_publisher')
 
         BoardShim.enable_dev_board_logger()
+        self.board_id = BoardIds.MINDROVE_WIFI_BOARD.value
 
         params = MindRoveInputParams()
         params.ip_port = 0
@@ -39,26 +40,26 @@ class EmgPublisher(Node):
         self.board.prepare_session()
         # board.start_stream () # use this for default options
         self.board.start_stream(450000)
+        self.board.config_board(b'\x00\x00\x00\x00\x00')  # EMG
 
         self.publisher_ = self.create_publisher(MindroveEmg, 'mindrove/emg', 10)
 
         self.emg_channels = BoardShim.get_emg_channels(BoardIds.MINDROVE_WIFI_BOARD)
-
-        self.timer = self.create_timer(0.01, self.timer_callback)
+        self.sampling_rate = BoardShim.get_sampling_rate(self.board_id)
+        self.sampling_period = 1 / self.sampling_rate * 2
+        self.timer = self.create_timer(self.sampling_period, self.timer_callback)
 
         self.max = np.ones(len(self.emg_channels)) * -np.inf
         self.min = np.ones(len(self.emg_channels)) * np.inf
-        
-  
 
 
     def timer_callback(self):
         msg = MindroveEmg()
         
+  
         data = self.board.get_current_board_data(1)
-        board_id = BoardIds.MINDROVE_WIFI_BOARD.value
         for count, channel in enumerate(self.emg_channels):
-           DataFilter.remove_environmental_noise(data[channel], BoardShim.get_sampling_rate(board_id), NoiseTypes.FIFTY.value)
+            DataFilter.remove_environmental_noise(data[channel], self.sampling_rate, NoiseTypes.FIFTY.value)
         emg_data = data[self.emg_channels].T[0]
         msg.data = emg_data.tolist()
         self.max = np.maximum(self.max, emg_data)
