@@ -1,20 +1,20 @@
+import argparse
+import logging
+import sys
+
+import mindrove
+import numpy as np
+import pyqtgraph as pg
 import rclpy
+from mindrove.board_shim import BoardIds, BoardShim, MindRoveInputParams
+from mindrove.data_filter import (AggOperations, DataFilter, FilterTypes,
+                                  NoiseTypes)
+from PyQt5 import QtGui, QtWidgets
+from pyqtgraph.Qt import QtCore, QtGui
 from rclpy.node import Node
 
 from roboasset_msgs.msg import MindroveEmg
-import numpy as np
 
-import mindrove
-from mindrove.board_shim import BoardShim, MindRoveInputParams, BoardIds
-from mindrove.data_filter import DataFilter, FilterTypes, AggOperations, NoiseTypes
-from PyQt5 import QtGui, QtWidgets
-import sys
-import argparse
-import logging
-import pyqtgraph as pg
-from pyqtgraph.Qt import QtGui, QtCore
-from pyqtgraph.Qt import QtGui
-from PyQt5 import QtGui
 
 class EmgPublisher(Node):
 
